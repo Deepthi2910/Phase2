@@ -1,0 +1,39 @@
+<?php
+$title = filter_input(INPUT_POST, 'title');
+$fees = filter_input(INPUT_POST, 'fees');
+$duration = filter_input(INPUT_POST, 'duration');
+if (!empty($title)){
+if (!empty($fees)){
+$host = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "2nd phase";
+// Create connection
+$conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
+if (mysqli_connect_error()){
+die('Connect Error ('. mysqli_connect_errno() .') '
+. mysqli_connect_error());
+}
+else{
+$sql = "INSERT INTO courses (title, fees, duration)
+values ('$title','$fees','$duration')";
+if ($conn->query($sql)){
+echo "New record is inserted sucessfully";
+}
+else{
+echo "Error: ". $sql ."
+". $conn->error;
+}
+$conn->close();
+}
+}
+else{
+echo "title should not be empty";
+die();
+}
+}
+else{
+echo "fees should not be empty";
+die();
+}
+?>
